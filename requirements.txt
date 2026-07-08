@@ -5,5 +5,7 @@ uvicorn[standard]
 scikit-learn
 python-jose[cryptography]
 passlib[bcrypt]
+bcrypt<4.0
 python-multipart
 sqlalchemy
+email-validator
