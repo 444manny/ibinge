@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: movie_recommender_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: movieapp
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: movie_recommender
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+
+volumes:
+  pgdata:
