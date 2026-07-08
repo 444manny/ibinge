@@ -14,17 +14,21 @@ Usage:
     python load_data.py
 """
 
+import os
 import re
 import pandas as pd
 import psycopg2
+from dotenv import load_dotenv
 from psycopg2.extras import execute_values
 
+load_dotenv()
+
 DB_CONFIG = {
-    "host": "localhost",
-    "port": 5432,
-    "dbname": "movie_recommender",
-    "user": "movieapp",
-    "password": "devpassword",
+    "host": os.environ.get("DB_HOST", "localhost"),
+    "port": int(os.environ.get("DB_PORT", 5432)),
+    "dbname": os.environ.get("DB_NAME", "movie_recommender"),
+    "user": os.environ.get("DB_USER", "movieapp"),
+    "password": os.environ.get("DB_PASSWORD", "devpassword"),
 }
 
 DATA_DIR = "data"

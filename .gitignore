@@ -12,6 +12,7 @@ env/
 # Environment / secrets
 .env
 .env.*
+!.env.example
 
 # Data (downloaded dataset, fetched via load_data.py)
 data/

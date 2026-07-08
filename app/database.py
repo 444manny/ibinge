@@ -4,14 +4,22 @@ to talk to Postgres. Keeping this in its own file means every other
 module just imports `get_db` instead of re-configuring a connection.
 """
 
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Matches the credentials in docker-compose.yml.
-# In a real deployment you'd load this from an environment variable instead
-# of hardcoding it — we'll switch to that when we deploy to AWS (RDS).
-DATABASE_URL = "postgresql://movieapp:devpassword@localhost:5432/movie_recommender"
+load_dotenv()
+
+DB_HOST = os.environ.get("DB_HOST", "localhost")
+DB_PORT = os.environ.get("DB_PORT", "5432")
+DB_NAME = os.environ.get("DB_NAME", "movie_recommender")
+DB_USER = os.environ.get("DB_USER", "movieapp")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "devpassword")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
