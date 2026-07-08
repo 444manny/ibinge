@@ -4,14 +4,13 @@ JWT token creation/verification (so users stay logged in without
 re-sending their password on every request).
 """
 
+import os
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-# In a real deployment, this MUST come from an environment variable,
-# never hardcoded — we'll fix this when we deploy to AWS.
-SECRET_KEY = "dev-only-secret-change-this-before-deploying"
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "dev-only-secret-change-this-before-deploying")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 day
 
